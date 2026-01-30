@@ -1,0 +1,33 @@
+<html><head><title>Form Example</title></head>
+<body>
+  <h1>Registration Form</h1>
+  <form action="success.html" method="post">
+    Name : <input type="text" name="stuname" placeholder="Enter your name" autofocus required><br><br>
+
+    Email id : <input type="email" name="email" placeholder="email@domain.in" required> <br><br>
+
+    Gender : <input type="radio" name="gender">Male
+    <input type="radio" name="gender">Female <br><br>
+
+    Skills : <input type="checkbox" name="skill">FWD
+    <input type="checkbox" name="skill">DSA
+    <input type="checkbox" name="skill">MAI<br><br>
+
+    Address : <textarea rows="3" cols="20"></textarea><BR><BR>
+
+    Course : <select>
+    <option>CSE</option>
+    <option>CS & IT</option>
+    <option>AI & DS</option></select><br><br>
+
+    Inter Marks : <input type="number" name="Marks" min="10" max="100"><br><br>
+
+    Photo : <input type="file" name="photo" accept=".jpg,.jpeg"><br><br>
+
+    Contact No : <input type="tel" name="contact" pattern="[0-9]{10}" required><br><br>
+
+    <button type="submit">Register</button>
+    <button type="reset">Clear</button>
+  </form>
+</body>
+</html>

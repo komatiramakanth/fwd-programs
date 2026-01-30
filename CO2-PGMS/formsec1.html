@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>
+      FORMS Example Program
+    </title>
+  </head>
+  <body>
+    <h1> Sample Registration </h1>
+    <form action="success.html" method="get">
+      Name : <input type="text" name="name" placeholder="Enter your name" autofocus><br><br>
+
+      Email : <input type="email" name="email" placeholder="abc@domain.in" required autofocus><br><br>
+
+      Contact No : <input type="tel" name="contactno" placeholder="10 Digit Ph No" pattern="[0-9]{10}" required><br><br>
+
+      Select you Gender : <input type="radio" name="gender">Male
+      <input type="radio" name="gender">Female<br><br>
+
+      Select Skill : <input type="checkbox" name="skill">FWD
+      <input type="checkbox" name="skill">DSA
+      <input type="checkbox" name="skill">Maths<br><br>
+
+      Inter Marks Percentage : <input type="number" name="Marks" min="0" max="100"><br><br>
+
+      Enter address : <textarea rows="3" cols="40" placeholder="Enter Address"></textarea><br><br>
+
+      Select Btech Domain : <select name="domain">
+        <option>CSE</option>
+        <option>CS & IT</option>
+        <option>AI & DS</option>
+      </select><BR><BR>
+      
+        Upload your photo : <input type="file" name="photo" accept=".jpg,.jpeg"><br><br>
+
+        Password : <input type="password" name="password" required><br><br>
+        <input type="checkbox" name="terms" required>Accept Terms & Conditions<br><br>
+
+        <!--<input type="button" name="submit">Submit  : old process-->
+        <button type="submit">Register</button>
+        <button type="reset">Clear</button>
+
+
+    </form>
+  </body>
+</html>

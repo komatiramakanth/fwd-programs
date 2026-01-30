@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Registration</title>
+</head>
+<body>
+
+<h2>Student Registration Form</h2>
+
+<form action="success.html" method="get">
+
+  <!-- Text Input -->
+  Name:
+  <input type="text" name="name" placeholder="Enter full name" aria-label="Enter your full name" autofocus>
+  <br><br>
+
+  <!-- Email Validation -->
+  Email:
+  <input type="email" name="email" placeholder="example@mail.com" required>
+  <br><br>
+
+  <!-- Number + Pattern -->
+  Mobile:
+  <input type="tel" name="mobile" pattern="[0-9]{10}" placeholder="10-digit number" required>
+  <br><br>
+
+  <!-- Radio Buttons -->
+  Gender:
+  <input type="radio" name="gender" required> Male
+  <input type="radio" name="gender"> Female
+  <br><br>
+
+  <!-- Select & Option -->
+  Course:
+  <select name="course" required>
+    <option value="">--Select--</option>
+    <option>B.Tech</option>
+    <option>B.Sc</option>
+    <option>MCA</option>
+  </select>
+  <br><br>
+
+  <!-- Textarea -->
+  Address:
+  <br>
+  <textarea name="address" rows="3" cols="30" placeholder="Enter address"></textarea>
+  <br><br>
+
+  <!-- Checkbox -->
+  Skills Known:
+  <input type="checkbox" name="skill"> HTML
+  <input type="checkbox" name="skill"> CSS
+  <input type="checkbox" name="skill"> JavaScript
+  <br><br>
+
+  <!-- Number Input -->
+  Percentage:
+  <input type="number" name="percentage" min="0" max="100" required>
+  <br><br>
+
+  <!-- File Upload -->
+  Upload Photo:
+  <input type="file" name="photo" accept=".jpg,.jpeg,.pdf">
+  <br><br>
+
+  <!-- Password Validation -->
+  Password:
+  <input type="password" name="password" minlength="6" required pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,}">
+  <br><br>
+
+  <!-- Declaration -->
+  <input type="checkbox" required>
+  I agree to the terms
+  <br><br>
+
+  <!-- Buttons -->
+  <button type="submit" aria-label="click for Registration" >Register</button>
+  <button type="reset" aria-label="click for form reset">Clear</button>
+
+</form>
+
+</body>
+</html>
