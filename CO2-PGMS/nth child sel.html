@@ -1,0 +1,46 @@
+
+<html> <!-- works on the principle of (an+b) : this is for nth child advanced selector -->
+<head>
+  <title>nth-child Demo</title>
+  <style>
+    ul {
+      width: 200px;
+      padding: 0;
+    }
+
+    li {
+      list-style: none;
+      padding: 8px;
+      border: 20px solid #bc0e0e;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    li:nth-child(even) {  
+      background-color: #076dcc;
+    }
+    li:nth-child(1) {
+      background-color: #a25d08;
+      font-weight: bold;
+    }
+    li:nth-child(-n+3) {
+      border: 20px solid green;
+    }
+    li:nth-child(n+4) {
+      color: rgb(219, 7, 138);
+    }
+  </style>
+</head>
+<body>
+  <h3>CSS :nth-child() Demo</h3>
+  <ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+    <li>Item 4</li>
+    <li>Item 5</li>
+    <li>Item 6</li>
+  </ul>
+
+</body>
+</html>
