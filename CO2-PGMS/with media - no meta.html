@@ -1,0 +1,46 @@
+<!-- Example program with media constraint and no meta tag-->
+<html>
+<head>
+  <title>Media Query Color Demo</title>
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+
+  <style>
+    .container {
+      max-width: 900px;
+      margin: auto;
+      border: 2px solid black;
+      padding: 10px;
+    }
+
+    .box {
+      width: 30%;
+      height: 100px;
+      background-color: lightcoral; /* Default: Laptop color (light red) */
+      display: inline-block;
+      margin: 1%;
+      text-align: center;
+      line-height: 100px;
+      font-weight: bold;
+    }
+
+    /* Mobile view */
+    @media (max-width: 600px) {
+      .box {
+        width: 100%;
+        background-color: lightgreen; /* Mobile color */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h3>Media Query: Color & Layout Change</h3>
+
+  <div class="container">
+    <div class="box">Box 1</div>
+    <div class="box">Box 2</div>
+    <div class="box">Box 3</div>
+  </div>
+
+</body>
+</html>

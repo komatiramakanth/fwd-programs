@@ -1,0 +1,56 @@
+<!-- Example program with media constraint-->
+<html>
+<head>
+  <title>Media Query Color Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    .container {
+      max-width: 900px;
+      margin: auto;
+      border: 2px solid black;
+      padding: 10px;
+    }
+
+    .box {
+      width: 30%;
+      height: 100px;
+      background-color: lightcoral; 
+      display: inline-block;
+      margin: 1%;
+      text-align: center;
+      line-height: 100px;
+      font-weight: bold;
+    }
+
+    
+    @media (max-width: 600px) {
+      .box {
+        width: 100%;
+        background-color: lightgreen; 
+      }
+        @media (max-width: 720px) {
+      .box {
+        width: 100%;
+        background-color: blue; 
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h3>Media Query: Color & Layout Change</h3>
+
+  <div class="container">
+    <div class="box">Box 1</div>
+    <div class="box">Box 2</div>
+    <div class="box">Box 3</div>
+  </div>
+
+</body>
+</html>
+
+<br><br><br><br><br><br><br><br><br><br><br>
+<center>
+<img src="media breakpoints.jpg" alt="image not found" width="60%" height="40%">
+</center>
