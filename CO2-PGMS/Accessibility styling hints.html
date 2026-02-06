@@ -1,0 +1,50 @@
+<!-- Accessibility Styling Hints 
+
+Focus outline: Indicates the currently active element during keyboard navigation
+
+Color contrast: Ensures text is readable for visually impaired users
+
+-->
+<html>
+<head>
+  <title>Accessibility Styling Demo</title>
+  <style>
+
+    body {
+      font-family: Arial;
+    }
+
+    /* Button styling */
+    button {
+      padding: 10px 20px;
+      background: darkblue;
+      color: white;
+      border: none;
+    }
+
+    /* Focus outline for keyboard users */
+    button:focus {
+      outline: 10px solid yellow;
+      outline-offset: 4px;
+    }
+
+    /* High contrast text box */
+    .box {
+      margin-top: 20px;
+      padding: 15px;
+      background: #222;
+      color: #fff;
+    }
+
+  </style>
+</head>
+<body>
+
+  <button>Press Tab to Focus Me</button>
+
+  <div class="box">
+    High contrast text for better readability
+  </div>
+
+</body>
+</html>

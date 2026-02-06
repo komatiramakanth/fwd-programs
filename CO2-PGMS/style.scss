@@ -1,0 +1,37 @@
+/* ================= VARIABLES ================= */
+/* Variables store reusable values */
+$main-color: steelblue;
+$padding-size: 10px;
+
+
+/* ================= MIXIN ================= */
+/* Mixin = reusable group of CSS rules */
+@mixin box-style {
+  padding: $padding-size;
+  border: 2px solid black;
+  text-align: center;
+}
+
+
+/* ================= EXTEND ================= */
+/* Base style that other classes can reuse */
+.box-base {
+  width: 120px;
+  height: 120px;
+}
+
+
+/* ================= NESTING ================= */
+/* Nesting shows parent-child relationship clearly */
+.container {
+
+  display: flex;
+  gap: 10px;
+
+  .box {
+    @include box-style;      // using mixin
+    @extend .box-base;       // inheriting base styles
+    background-color: $main-color;
+    color: white;
+  }
+}

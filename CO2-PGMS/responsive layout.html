@@ -1,0 +1,59 @@
+<!-- Responsive Layout - without Framework
+
+Responsive layouts without frameworks are created using CSS techniques like Flexbox, Grid, fluid units, and media queries to adapt content to different screen sizes.
+-->
+<html>
+<head>
+  <title>Responsive Layout - No Framework</title>
+
+  <!-- Makes media queries work correctly on mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+
+    /* Page styling */
+    body {
+      font-family: Arial;
+      margin: 0;
+    }
+
+    /* Container using Flexbox */
+    .container {
+      display: flex;        /* places boxes in a row */
+      gap: 10px;
+      padding: 10px;
+    }
+
+    /* Box styles */
+    .box {
+      flex: 1;              /* equal width boxes */
+      padding: 20px;
+      background: lightblue;
+      text-align: center;
+    }
+
+    /* ========== MEDIA QUERY ========== */
+    /* For screens 768px and below (mobile) */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;  /* stack boxes vertically */
+      }
+
+      .box {
+        background: lightgreen;  /* visual difference */
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="box">Box 1</div>
+    <div class="box">Box 2</div>
+    <div class="box">Box 3</div>
+  </div>
+
+</body>
+</html>
