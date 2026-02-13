@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Submission Deadline</title>
+</head>
+<body>
+  <link rel="stylesheet" href="/public/css/style.css">
+
+<nav>
+    <a href="/faculty-dashboard.html">Dashboard</a>
+    <a href="/faculty-analytics.html">Analytics</a>
+    <a href="/faculty-deadline.html">Deadline</a>
+    <a href="/faculty/export">Export Excel</a>
+    <a href="/faculty/download-zip">Download ZIP</a>
+    <a href="/logout">Logout</a>
+</nav>
+<div class="container">
+    <h2>Set / Extend Submission Deadline</h2>
+
+    <form id="deadlineForm">
+        <label>New Deadline:</label><br>
+        <input type="datetime-local" name="newDeadline" required><br><br>
+        <button type="submit">Update Deadline</button>
+    </form>
+
+    <p id="message"></p>
+</div>
+    <script>
+        const form = document.getElementById('deadlineForm');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+
+            const data = {
+                newDeadline: formData.get('newDeadline')
+            };
+
+            const response = await fetch('/faculty/update-deadline', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            document.getElementById('message').innerText = result.message;
+        });
+    </script>
+</body>
+</html>

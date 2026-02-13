@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Certificate</title>
+</head>
+<body>
+  <link rel="stylesheet" href="/public/css/style.css">
+
+<nav>
+    <a href="/student-dashboard.html">Dashboard</a>
+    <a href="/upload.html">Upload Certificate</a>
+    <a href="/logout">Logout</a>
+</nav>
+<div class="container">
+    <h2>Upload Certificate</h2>
+
+    <form id="uploadForm" enctype="multipart/form-data">
+        <label>Certificate Type:</label><br>
+        <select name="certificateType" required>
+            <option value="">Select</option>
+            <option>HTML Essentials</option>
+            <option>CSS</option>
+            <option>JavaScript 1</option>
+            <option>JavaScript 2</option>
+        </select><br><br>
+
+        <input type="file" name="certificate" required><br><br>
+
+        <button type="submit">Upload</button>
+    </form>
+
+    <p id="message"></p>
+</div>
+    <script>
+        const form = document.getElementById('uploadForm');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+
+            const response = await fetch('/students/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            document.getElementById('message').innerText = result.message;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+</head>
+<body>
+  <link rel="stylesheet" href="/public/css/style.css">
+
+<nav>
+    <a href="/student-dashboard.html">Dashboard</a>
+    <a href="/upload.html">Upload Certificate</a>
+    <a href="/logout">Logout</a>
+</nav>
+
+<div class="container">
+
+<h2>Student Dashboard</h2>
+
+<p><strong>Roll No:</strong> <span id="rollNo"></span></p>
+<p><strong>Total Marks:</strong> <span id="marks"></span> / 5</p>
+<p><strong>Submission Deadline:</strong> <span id="deadline"></span></p>
+
+<h3>Certificates</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Certificate</th>
+            <th>Status</th>
+            <th>Remarks</th>
+        </tr>
+    </thead>
+    <tbody id="certTable"></tbody>
+</table>
+
+</div>
+
+    <script>
+        async function loadDashboard() {
+            const response = await fetch('/students/dashboard-data');
+            const data = await response.json();
+
+            document.getElementById('rollNo').innerText = data.rollNo;
+document.getElementById('marks').innerText = data.marks;
+
+if (data.deadline) {
+    const formattedDate = new Date(data.deadline).toLocaleString();
+    document.getElementById('deadline').innerText = formattedDate;
+} else {
+    document.getElementById('deadline').innerText = 'Not set';
+}
+
+
+            const table = document.getElementById('certTable');
+            table.innerHTML = '';
+
+            data.certificates.forEach(cert => {
+                const row = `
+                    <tr>
+                        <td>${cert.CertificateType}</td>
+                        <td>${cert.Status}</td>
+                        <td>${cert.Remarks || ''}</td>
+                    </tr>
+                `;
+                table.innerHTML += row;
+            });
+        }
+
+        loadDashboard();
+    </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Faculty Dashboard</title>
+</head>
+<body>
+  <link rel="stylesheet" href="/public/css/style.css">
+
+<nav>
+    <a href="/faculty-dashboard.html">Dashboard</a>
+    <a href="/faculty-analytics.html">Analytics</a>
+    <a href="/faculty-deadline.html">Deadline</a>
+    <a href="/faculty/export">Export Excel</a>
+    <a href="/faculty/download-zip">Download ZIP</a>
+    <a href="/logout">Logout</a>
+</nav>
+<div class="container">
+    <h2>Pending Certificates</h2>
+
+<label>Select Section:</label>
+<select id="sectionFilter">
+    <option value="">All Sections</option>
+</select>
+
+<br><br>
+
+
+    <table border="1" id="certTable">
+        <thead>
+            <tr>
+                <th>Roll No</th>
+                <th>Section</th>
+                <th>Certificate Type</th>
+                <th>File</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+    <script>
+    const sectionDropdown = document.getElementById('sectionFilter');
+
+    // Populate 16 sections
+    for (let i = 1; i <= 16; i++) {
+        const option = document.createElement('option');
+        option.value = `FWD SECTION ${i}`;
+        option.textContent = `FWD SECTION ${i}`;
+        sectionDropdown.appendChild(option);
+    }
+
+    async function loadCertificates() {
+        const selectedSection = sectionDropdown.value;
+        let url = '/faculty/dashboard';
+
+        if (selectedSection) {
+            url += '?section=' + encodeURIComponent(selectedSection);
+        }
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const tableBody = document.querySelector('#certTable tbody');
+        tableBody.innerHTML = '';
+
+        data.forEach(cert => {
+            const row = `
+                <tr>
+                    <td>${cert.RollNo}</td>
+                    <td>${cert.Section}</td>
+                    <td>${cert.CertificateType}</td>
+                    <td>
+                        <a href="/${cert.FilePath}" target="_blank">View</a>
+                    </td>
+                    <td>
+                        <button onclick="approve(${cert.CertificateID})">Approve</button>
+                        <button onclick="reject(${cert.CertificateID})">Reject</button>
+                    </td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+        });
+    }
+
+    async function approve(id) {
+        await fetch('/faculty/approve/' + id, { method: 'POST' });
+        loadCertificates();
+    }
+
+    async function reject(id) {
+        const remarks = prompt("Enter rejection reason:");
+        await fetch('/faculty/reject/' + id, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ remarks })
+        });
+        loadCertificates();
+    }
+
+    sectionDropdown.addEventListener('change', loadCertificates);
+
+    loadCertificates();
+</script>
+
+</body>
+</html>

@@ -7,17 +7,15 @@ var(--variable_name)
   <title>CSS Variable </title>
   <style>
     .container {
-      
-      --box-color: lightblue;
+      --box-color: lightblue; /*in css variable can be created using the syntax --variable_name*/
       --box-size: 120px;
     }
-
     .box {
-      width: var(--box-size);
-      height: var(--box-size);
-      background-color: var(--box-color);
+      width: var(--box-size);       /* a=   5*/
+      height: var(--box-size);     /*    a*/
+      background-color: var(--box-color);    /*    a*/
       text-align: center;
-      line-height: 120px;
+      line-height: 120px; /* var(--box-size); */ /* c = a */
       font-weight: bold;
     }
   </style>
