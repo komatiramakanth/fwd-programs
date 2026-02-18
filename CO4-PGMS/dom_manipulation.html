@@ -1,0 +1,20 @@
+<!-- Example program for DOM manipulation (document.getElementById(), document.querySelector(), addEventListener(), innerHTML, textContent, style) -->
+<html>
+<body>
+<h2 id="title">DOM Example</h2>
+<p class="para">This is a paragraph.</p>
+<button id="btn">Click Me</button>
+<script>
+  const heading = document.getElementById("title");
+  const paragraph = document.querySelector(".para");
+  document.getElementById("btn").addEventListener("click", function() {
+    heading.innerText = "Title Changed!";
+    heading.style.color = "blue";
+    paragraph.innerText = "Paragraph updated using querySelector!";
+    paragraph.style.fontWeight = "bold";
+  });
+
+</script>
+
+</body>
+</html>

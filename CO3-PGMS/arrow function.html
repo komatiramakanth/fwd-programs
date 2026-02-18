@@ -1,0 +1,28 @@
+<!-- Arrow functions (()=>{}) example -->
+<body>
+<script>
+ function add(a,b){ //normal function
+  var c=a+b;
+  return c;
+ }
+ let p=Number(prompt("Enter first value"));
+ let q=Number(prompt("Enter second value"));
+ document.write("Normal Function Sum of "+ p +" and "+ q + " are "+add(p,q) +"<br><br>");
+
+ const add1 = (p,q) => p+q; //arrow function with two parameters
+ document.write("Arrow function Sum of "+ p +" and "+ q + " are "+add1(p,q));
+
+ const add2 = () => "hello"; //arrow function with no paramenters
+ document.write("Arrow function without par "+add2());
+
+ const add3 = (x) => x*x;
+ document.write("Arrow function with one par ",add3(p));
+
+
+
+
+</script>
+</body>
+
+const a=5;
+a=7;

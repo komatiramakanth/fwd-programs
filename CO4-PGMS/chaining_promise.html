@@ -1,0 +1,24 @@
+<!-- Example pgm for chaining promise -->
+
+<script>
+
+let promise = new Promise(function(resolve, reject) {
+  resolve(5);
+});
+promise
+  .then(function(num) {
+    console.log("Step 1:", num);
+    return num * 2;
+  })
+  .then(function(result) {
+    console.log("Step 2:", result);
+    return result + 10;
+  })
+  .then(function(finalResult) {
+    console.log("Final Result:", finalResult);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+
+</script>

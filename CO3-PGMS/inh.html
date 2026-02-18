@@ -1,0 +1,21 @@
+<!-- example of inhe and super program -->
+ <html>
+  <body>
+    <script>
+      class fwd{
+        greetings(){
+          return "welcome Section 10";
+        }
+      }
+      class html extends fwd{
+        topic(){
+          return super.greetings()+" Learn HTML";
+        }
+      }
+      const ht=new html();
+      //document.write(ht.greetings()+"<br>");
+      document.write(ht.topic());
+
+    </script>
+  </body>
+ </html>

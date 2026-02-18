@@ -1,0 +1,31 @@
+<!-- Example pgm for Browser storage (localStorage, sessionStorage, setItem(), getItem())-->
+<html><body>
+<h2>Browser Storage Example</h2>
+<input type="text" id="name" placeholder="Enter Name">
+<br><br>
+<button onclick="saveSession()">Save to sessionStorage</button>
+<button onclick="showSession()">Show sessionStorage</button>
+<button onclick="clearSession()">Clear sessionStorage</button>
+<p id="output"></p><script>
+
+function saveSession() {
+  let value = document.getElementById("name").value;
+  sessionStorage.setItem("username", value);
+  alert("Saved to sessionStorage");
+}
+
+function showSession() {
+  let data = sessionStorage.getItem("username");
+  document.getElementById("output").innerText =
+    "sessionStorage Value: " + data;
+}
+
+function clearSession() {
+  sessionStorage.clear();
+  alert("sessionStorage cleared");
+}
+
+</script>
+
+</body>
+</html>

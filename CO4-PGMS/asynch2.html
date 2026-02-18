@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Random Dog Image</h2>
+
+<button onclick="getDog()">Get New Dog</button>
+<br><br>
+
+<img id="dogImage" width="300">
+
+<script>
+
+async function getDog() {
+
+  try {
+    // Fetch random dog image
+    let response = await fetch("https://api.thedogapi.com/v1/images/search");
+
+    let data = await response.json();
+
+    // data is an array, first item contains image info
+    let imageUrl = data[0].url;
+
+    // Set image source
+    document.getElementById("dogImage").src = imageUrl;
+
+  } catch (error) {
+    alert("Error fetching dog image!");
+  }
+
+}
+
+</script>
+
+</body>
+</html>

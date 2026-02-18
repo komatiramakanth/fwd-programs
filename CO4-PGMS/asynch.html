@@ -1,0 +1,36 @@
+<!-- Asynchronous programming (fetch(), async, await) -->
+<html>
+<body>
+
+<h2>Async Fetch Example</h2>
+<button onclick="getData()">Get User Data</button>
+
+<p id="output"></p>
+
+<script>
+
+async function getData() {
+
+  try {
+    // fetch data from API
+    let response = await fetch("https://jsonplaceholder.typicode.com/users/1");
+
+    // convert response to JSON
+    let data = await response.json();
+
+    // display result
+    document.getElementById("output").innerText =
+      "Name: " + data.name + 
+      ", Email: " + data.email;
+
+  } catch (error) {
+    document.getElementById("output").innerText =
+      "Error fetching data!";
+  }
+
+}
+
+</script>
+
+</body>
+</html>

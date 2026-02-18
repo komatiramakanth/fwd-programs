@@ -1,0 +1,15 @@
+<!-- example program for Objects (properties, methods) -->
+ <body>
+  <script>
+    
+    let username=prompt("Enter your name");
+    const student={
+      name:username,            //properties 
+      greetings:function(){     //method
+        return "<br> My name is "+this.name;
+      }};
+      document.write("<br><br>Name is : "+student.name);
+      document.write(student.greetings());
+  </script>
+ </body>
+

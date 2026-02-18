@@ -1,0 +1,32 @@
+<!-- example program for Callback functions -->
+ <body>
+  <script>
+    function remote(action){
+      action(); 
+    }
+    function tvon(){
+      document.write("TV IS ON <br><br>");
+    }
+    function volume(){
+      document.write("Volume is on");
+    }
+    remote(tvon);
+    volume();
+
+
+  </script>
+ </body>
+
+ <!-- task
+ 
+ write a pgm using javascipt, take user name and time as input
+
+ and display greetings as
+
+ Good Morning Rahul or
+ GOOD AFTERNOON rahul or
+ good night rahul
+
+ based on the time
+ 
+ -->

@@ -1,0 +1,20 @@
+<!-- example of inhera program -->
+ <html>
+  <body>
+    <script>
+      class fwd{
+        greetings(){                                                 
+          return "welcome Section 1 ";
+        }}
+      class html extends fwd{
+        greet(){
+          //return "Learn html also";    
+          return super.greetings()+" Learn HTML";
+        }}
+      //const s1=new fwd(); 
+      const s11=new html();       
+      //document.write(s11.greetings());
+      document.write(s11.greet());
+    </script>
+  </body>
+ </html>

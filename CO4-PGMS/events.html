@@ -1,0 +1,49 @@
+<!-- Example program for Event handling (click, input, change, submit), -->
+<html>
+<body>
+<h3> Click Event</h3>
+<button id="btn">Click Me</button>
+<p id="clickOutput"></p>
+<h3> Input Event</h3>
+<input type="text" id="nameInput" placeholder="Type your name">
+<p id="inputOutput"></p>
+<h3> Change Event</h3>
+<select id="courseSelect">
+  <option value="">Select Course</option>
+  <option value="CSE">CSE</option>
+  <option value="ECE">ECE</option>
+</select>
+<p id="changeOutput"></p>
+<h3> Submit Event</h3>
+<form id="myForm">
+  <input type="text" placeholder="Enter something" required>
+  <button type="submit">Submit</button>
+</form>
+<p id="submitOutput"></p>
+<script>
+  document.getElementById("btn").addEventListener("click", function() {
+    document.getElementById("clickOutput").innerText = "Button Clicked!";
+  });
+
+ 
+  document.getElementById("nameInput").addEventListener("input", function(e) {
+    document.getElementById("inputOutput").innerText = 
+      "You are typing: " + e.target.value;
+  });
+
+
+  document.getElementById("courseSelect").addEventListener("change", function(e) {
+    document.getElementById("changeOutput").innerText = 
+      "Selected: " + e.target.value;
+  });
+
+  
+  document.getElementById("myForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // this is used to Prevent page refresh when clicked on submit button
+    document.getElementById("submitOutput").innerText = 
+      "Form Submitted Successfully!";
+  });
+</script>
+
+</body>
+</html>

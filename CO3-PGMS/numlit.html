@@ -1,0 +1,15 @@
+<!-- example pgm for number literals -->
+ <html>
+  <body>
+    <script>
+      let he=0xFF;
+      let sci=1e3;
+      document.write("Hexadecimal value of 0xFF in Decimal is "+he+"<br><br>");
+      document.write("Scientific value of 1e3 in Decimal is "+sci+"<br><br>");
+      document.write("Hexadecimal value with no change is "+he.toString(16).toUpperCase()+"<br><br>");
+      document.write("Scientific value without change is "+sci.toExponential());
+    </script>
+  </body>
+ </html>
+
+ //imagine your working on a project, which displays the hexadecimal and scientific values on to the web page, but the organization which handled the project previously made a mistake, such that the hexadecimal and scientific values are been dispalyed as decimal values on the web page, can you identify the issue and fix it?
