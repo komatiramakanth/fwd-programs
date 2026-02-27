@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0; padding:0;">
+
+  <!--
+    No security headers set for this page.
+    Can be embedded in any iframe.
+    Vulnerable to Clickjacking.
+  -->
+  <button
+    onclick="alert('💸 ₹10,000 Transferred!\nYou were CLICKJACKED!')"
+    style="width:220px; height:55px; font-size:13px; font-weight:bold;
+           background:#e74c3c; color:white; border:none; cursor:pointer;">
+    Transfer ₹10,000
+  </button>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<html>
+<body>
+<h2>Age Validation</h2>
+<input type="number" id="ageInput" placeholder="Enter your age">
+<button onclick="validateAge()">Submit</button>
+<script>
+function checkAge(age) {
+  if (age === "" || isNaN(age)) {                 
+    throw new Error("Please enter a valid number!");
+  }
+  if (age < 18) {
+    throw new Error("You are underage!");
+  }
+  return "Access Granted!";
+}
+function validateAge() {
+  let age = document.getElementById("ageInput").value;
+  try {
+    alert(checkAge(age));
+  } 
+  catch (error) {
+    alert(error.message);  
+  }
+}
+
+</script>
+
+</body>
+</html>
+
+
+5=="5"  //true
+5==="5"   //FALSE

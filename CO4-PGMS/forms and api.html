@@ -1,0 +1,36 @@
+<!-- Example Pgm for Forms & API Integration: Form validation with JavaScript, Handling user input dynamically, API integration (third-party APIs) -->
+<html>
+<body>
+<h2>Name Age Predictor</h2>
+<form id="myForm">
+  <input type="text" id="nameInput" placeholder="Enter your name">
+  <button type="submit">Predict Age</button>
+</form>
+<h3 id="result"></h3>
+<script>
+// Get form
+const form = document.getElementById("myForm");
+// When form is submitted
+form.addEventListener("submit", function(event) {
+  event.preventDefault(); // used to Stop page reload
+  let name = document.getElementById("nameInput").value;
+  // below code is for  Form Validation
+  if (name.trim() === "") {
+    document.getElementById("result").innerHTML = "Please enter a name!";
+    return;
+  }
+  // below code is for API Integration
+  fetch("https://api.agify.io?name=" + name)
+    .then(response => response.json())
+    .then(data => {
+      // below code is for Dynamic Handling of User Input
+      document.getElementById("result").innerHTML =
+        "Predicted age for <b>" + name + "</b> is: " + data.age;
+    })
+    .catch(error => {
+      document.getElementById("result").innerHTML = "Error fetching data!";
+    });
+});
+</script>
+</body>
+</html>

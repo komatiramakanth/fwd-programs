@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Attacker Page</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+    .demo-box {
+      background: white; padding: 20px; margin: 20px 0;
+      border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .wrapper  { position: relative; width: 220px; height: 55px; margin-top: 15px; }
+    .fake     { position: absolute; width: 220px; height: 55px;
+                text-align: center; line-height: 55px; font-weight: bold;
+                z-index: 1; border-radius: 6px; cursor: pointer; }
+    iframe    { position: absolute; width: 220px; height: 55px;
+                opacity: 0.01; z-index: 2; border: none; }
+    .tag      { display:inline-block; padding: 3px 10px; border-radius: 4px;
+                font-size: 13px; color: white; }
+  </style>
+</head>
+<body>
+
+<h2>🎭 CSP + Clickjacking Demo</h2>
+
+<!-- ── ATTACK 1: Unprotected Victim ── -->
+<div class="demo-box">
+  <span class="tag" style="background:#e74c3c;">❌ No Protection</span>
+  <h3>🎁 Win a Free iPhone!</h3>
+  <p>Click the button below to claim your prize:</p>
+
+  <div class="wrapper">
+    <div class="fake" style="background: orange;">🎁 Claim Free Gift</div>
+    <!--
+      This iframe loads victim.html which has NO security headers.
+      The bank button inside is clickable — attack succeeds.
+    -->
+    <iframe src="http://localhost:3000/victim.html"></iframe>
+  </div>
+
+  <p style="color:gray; font-size:13px;">
+    👆 You think you're clicking "Claim Free Gift"<br>
+    but actually clicking hidden bank button!
+  </p>
+</div>
+
+<!-- ── ATTACK 2: Protected Victim ── -->
+<div class="demo-box">
+  <span class="tag" style="background:#27ae60;">✅ CSP Protected</span>
+  <h3>Same Attack — Protected Page</h3>
+  <p>The iframe below tries to load the protected page:</p>
+
+  <div class="wrapper">
+    <div class="fake" style="background:#e74c3c; color:white;">🎁 Claim Free Gift</div>
+    <!--
+      This iframe tries to load victim-protected.html.
+      Server sends X-Frame-Options: DENY and CSP frame-ancestors: none.
+      Browser REFUSES to render the page inside iframe — attack fails.
+    -->
+    <iframe src="http://localhost:3000/victim-protected.html"></iframe>
+  </div>
+
+  <p style="color:gray; font-size:13px;">
+    👆 Server sent X-Frame-Options: DENY<br>
+    Browser blocked the iframe from loading!
+  </p>
+</div>
+
+</body>
+</html>

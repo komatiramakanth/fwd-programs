@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0; padding:0;">
+
+  <!--
+    This page is protected by HTTP security headers set in server.js:
+
+    X-Frame-Options: DENY
+      → Tells browser: never embed this page in an iframe
+      → Works in all browsers including older ones
+
+    Content-Security-Policy: frame-ancestors 'none'
+      → Modern version of X-Frame-Options
+      → Browser will REFUSE to render this page inside any iframe
+
+    Because of these headers, even if attacker puts this page
+    in an iframe, the browser will show blank or an error —
+    the button below will NEVER be visible or clickable inside iframe.
+
+    NO JavaScript frame-busting needed anymore —
+    the SERVER handles everything through HTTP headers!
+  -->
+
+  <button
+    onclick="alert('✅ Transfer button clicked directly.\nPage is protected!')"
+    style="width:220px; height:55px; font-size:13px; font-weight:bold;
+           background:#27ae60; color:white; border:none; cursor:pointer;">
+    Transfer ₹10,000 (Protected)
+  </button>
+
+</body>
+</html>

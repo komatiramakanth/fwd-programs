@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CORS Demo</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+
+    .demo-box {
+      background: white; padding: 20px; margin: 20px 0;
+      border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    button {
+      padding: 10px 20px; font-size: 14px; font-weight: bold;
+      color: white; border: none; border-radius: 5px;
+      cursor: pointer; margin-top: 10px;
+    }
+
+    .btn-red   { background: #e74c3c; }
+    .btn-green { background: #27ae60; }
+    .btn-blue  { background: #2980b9; }
+
+    .result {
+      margin-top: 15px; padding: 12px; border-radius: 5px;
+      font-size: 14px; font-weight: bold; display: none;
+    }
+
+    .result.error   { background: #fdecea; color: #c0392b; border-left: 5px solid #e74c3c; }
+    .result.success { background: #eafaf1; color: #1e8449; border-left: 5px solid #27ae60; }
+
+    .origin-box {
+      background: #2c3e50; color: #1abc9c; padding: 10px 15px;
+      border-radius: 5px; font-family: monospace; font-size: 14px;
+      margin: 10px 0;
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 10px; }
+    th { background: #34495e; color: white; padding: 8px; }
+    td { padding: 8px; border: 1px solid #ddd; }
+    tr:nth-child(even) { background: #f9f9f9; }
+  </style>
+</head>
+<body>
+
+<h2>🌐 CORS — Cross-Origin Resource Sharing Demo</h2>
+
+<!-- ── What is CORS ── -->
+<div class="demo-box">
+  <h3>📖 What is CORS?</h3>
+  <p>
+    CORS is a browser security policy that <b>blocks requests made from one 
+    origin to a different origin</b> unless the server explicitly allows it.
+  </p>
+
+  <div class="origin-box">
+    <!-- Shows the current origin of this page dynamically -->
+    📍 This page's origin: <span id="current-origin"></span>
+    <br>
+    🎯 API server origin: http://localhost:3000
+    <br><br>
+    ⚠️  These are DIFFERENT origins → CORS rules apply!
+  </div>
+
+  <script>
+    // Show the current page origin so students understand what "origin" means
+    document.getElementById('current-origin').textContent = window.location.origin;
+  </script>
+</div>
+
+<!-- ── DEMO 1: Blocked Request ── -->
+<div class="demo-box">
+  <h3>❌ Demo 1 — Request WITHOUT CORS Header (Blocked)</h3>
+  <p>
+    This button fetches from <code>http://localhost:3000/no-cors</code>
+    which does NOT send an <code>Access-Control-Allow-Origin</code> header.
+    The browser will BLOCK the response.
+  </p>
+
+  <button class="btn-red" onclick="fetchNoCors()">
+    Fetch Without CORS
+  </button>
+
+  <div id="result1" class="result"></div>
+
+  <script>
+    async function fetchNoCors() {
+      const box = document.getElementById('result1');
+      box.style.display = 'block';
+      box.className = 'result';
+      box.textContent = '⏳ Fetching...';
+
+      try {
+        /*
+          Fetching from a DIFFERENT origin (port 3000) from our page (port 5500).
+          The server does NOT send Access-Control-Allow-Origin header.
+          Browser will BLOCK this and throw a CORS error.
+          Check browser Console (F12) to see the full CORS error message.
+        */
+        const res = await fetch('http://localhost:3000/no-cors');
+        const data = await res.json();
+        box.className = 'result success';
+        box.textContent = '✅ Response: ' + data.message;
+
+      } catch (err) {
+        /*
+          Browser blocks the response due to missing CORS header.
+          Note: The REQUEST still reaches the server,
+          but the browser HIDES the response from our JavaScript.
+          This is an important distinction!
+        */
+        box.className = 'result error';
+        box.innerHTML = `
+          ❌ CORS Error! Request was BLOCKED by browser.<br><br>
+          <small>
+            The server received the request but browser blocked the response.<br>
+            Open Console (F12) to see the full CORS error.
+          </small>
+        `;
+      }
+    }
+  </script>
+</div>
+
+<!-- ── DEMO 2: Allowed Request ── -->
+<div class="demo-box">
+  <h3>✅ Demo 2 — Request WITH CORS Header (Allowed)</h3>
+  <p>
+    This button fetches from <code>http://localhost:3000/with-cors</code>
+    which sends <code>Access-Control-Allow-Origin: *</code>.
+    The browser will ALLOW the response.
+  </p>
+
+  <button class="btn-green" onclick="fetchWithCors()">
+    Fetch With CORS (Allow All)
+  </button>
+
+  <div id="result2" class="result"></div>
+
+  <script>
+    async function fetchWithCors() {
+      const box = document.getElementById('result2');
+      box.style.display = 'block';
+      box.className = 'result';
+      box.textContent = '⏳ Fetching...';
+
+      try {
+        /*
+          Same cross-origin request but now the server sends:
+              Access-Control-Allow-Origin: *
+          The * means ANY origin is allowed to read the response.
+          Browser sees this header and allows our JS to access the data.
+        */
+        const res = await fetch('http://localhost:3000/with-cors');
+        const data = await res.json();
+        box.className = 'result success';
+        box.innerHTML = `
+          ✅ Response received: ${data.message}<br><br>
+          <small>
+            Server sent: Access-Control-Allow-Origin: * <br>
+            Browser allowed the response ✅
+          </small>
+        `;
+
+      } catch (err) {
+        box.className = 'result error';
+        box.textContent = '❌ Error: ' + err.message;
+      }
+    }
+  </script>
+</div>
+
+<!-- ── DEMO 3: Specific Origin ── -->
+<div class="demo-box">
+  <h3>🎯 Demo 3 — Specific Origin CORS</h3>
+  <p>
+    This server only allows requests from <code>http://127.0.0.1:5500</code>.
+    Try fetching — it works only if your Live Server runs on that exact origin.
+  </p>
+
+  <button class="btn-blue" onclick="fetchSpecificCors()">
+    Fetch With Specific Origin
+  </button>
+
+  <div id="result3" class="result"></div>
+
+  <script>
+    async function fetchSpecificCors() {
+      const box = document.getElementById('result3');
+      box.style.display = 'block';
+      box.className = 'result';
+      box.textContent = '⏳ Fetching...';
+
+      try {
+        /*
+          Server sends:
+              Access-Control-Allow-Origin: http://127.0.0.1:5500
+          Only this exact origin is allowed.
+          If your Live Server runs on localhost:5500 instead of
+          127.0.0.1:5500, the browser will BLOCK it — same machine,
+          but different origin string!
+          This demonstrates that origin matching is EXACT.
+        */
+        const res = await fetch('http://localhost:3000/specific-cors');
+        const data = await res.json();
+        box.className = 'result success';
+        box.innerHTML = `
+          ✅ Response: ${data.message} <br><br>
+          <small>Server allowed only: http://127.0.0.1:5500</small>
+        `;
+
+      } catch (err) {
+        box.className = 'result error';
+        box.innerHTML = `
+          ❌ Blocked! Your origin (${window.location.origin}) 
+          is not in the allowed list.<br><br>
+          <small>Server only allows: http://127.0.0.1:5500</small>
+        `;
+      }
+    }
+  </script>
+</div>
+
+<!-- ── CORS Headers Reference ── -->
+<div class="demo-box">
+  <h3>📋 Common CORS Headers Reference</h3>
+  <table>
+    <tr>
+      <th>Header</th>
+      <th>Example Value</th>
+      <th>What it means</th>
+    </tr>
+    <tr>
+      <td><b>Access-Control-Allow-Origin</b></td>
+      <td>* or https://example.com</td>
+      <td>Which origins can read the response</td>
+    </tr>
+    <tr>
+      <td><b>Access-Control-Allow-Methods</b></td>
+      <td>GET, POST, PUT</td>
+      <td>Which HTTP methods are allowed</td>
+    </tr>
+    <tr>
+      <td><b>Access-Control-Allow-Headers</b></td>
+      <td>Content-Type, Authorization</td>
+      <td>Which request headers are allowed</td>
+    </tr>
+    <tr>
+      <td><b>Access-Control-Allow-Credentials</b></td>
+      <td>true</td>
+      <td>Allow cookies to be sent cross-origin</td>
+    </tr>
+    <tr>
+      <td><b>Access-Control-Max-Age</b></td>
+      <td>86400</td>
+      <td>How long to cache preflight response (seconds)</td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>

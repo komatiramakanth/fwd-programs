@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bank Page - Protected</title>
+
+  <!-- 
+    ============================================================
+    CONTENT SECURITY POLICY (CSP) - META TAG
+    ============================================================
+    CSP is a browser security feature that lets you control
+    WHAT resources the browser is allowed to load and 
+    HOW your page can be used by others.
+
+    We set CSP using a <meta> tag here because we don't have
+    a server to send HTTP headers. In real production, this
+    would be set as an HTTP response header like:
+        Content-Security-Policy: frame-ancestors 'none'
+
+    DIRECTIVE USED: frame-ancestors 'none'
+    ---------------------------------------------------------------
+    'frame-ancestors' controls which pages are ALLOWED to embed
+    this page inside:
+        <iframe>, <frame>, <embed>, or <object> tags
+
+    VALUES:
+      'none'   → No one can embed this page in an iframe (most strict)
+      'self'   → Only the same origin can embed it
+      'https://trusted.com' → Only that specific site can embed it
+
+    WHY 'none'?
+      A bank page should NEVER be embedded inside another website.
+      Setting 'none' completely prevents Clickjacking attacks.
+
+    NOTE: frame-ancestors is the MODERN replacement for the older
+    HTTP header X-Frame-Options: DENY
+    Both do the same job, but CSP is more flexible and powerful.
+    ============================================================
+  -->
+  <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none'">
+
+  <style>
+    /* 
+      Hide the body by default.
+      The JavaScript below will decide what to show
+      based on whether we are inside an iframe or not.
+    */
+    body { display: none; margin: 0; padding: 0; }
+
+    .warning {
+      width: 220px; height: 55px; background: #c0392b;
+      color: white; font-size: 11px; font-weight: bold;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+    }
+  </style>
+
+  <script>
+    /*
+      ============================================================
+      JAVASCRIPT FRAME-BUSTING — Client Side CSP Enforcement
+      ============================================================
+      The <meta> CSP tag above works in modern browsers, but
+      older browsers may ignore it. So we add this JavaScript
+      check as a SECOND layer of defense.
+
+      HOW IT WORKS:
+      -------------
+      window.self  → refers to the CURRENT window (this page)
+      window.top   → refers to the TOP-LEVEL window (browser tab)
+
+      If this page is loaded DIRECTLY in the browser:
+          window.top === window.self  (same window)
+
+      If this page is loaded INSIDE an iframe:
+          window.top !== window.self  (different windows)
+
+      So by comparing these two, we can detect if we are
+      being embedded inside an attacker's iframe.
+
+      DEFENSE LAYERS:
+      ---------------
+      Layer 1 → CSP meta tag    (browser enforces it automatically)
+      Layer 2 → JS frame-buster (we manually detect and handle it)
+
+      Together they cover both modern and older browsers.
+      ============================================================
+    */
+    document.addEventListener("DOMContentLoaded", function () {
+
+      if (window.top !== window.self) {
+        /*
+          We are INSIDE an iframe.
+          This means someone is trying to embed our bank page
+          inside their website — possible Clickjacking attempt!
+
+          ACTION: Show a visible "Blocked" warning inside the iframe
+          instead of the real button, so the attacker's overlay
+          clicks nothing harmful.
+        */
+        document.body.style.display = "block";
+        document.getElementById("btn").style.display = "none";      // hide real button
+        document.getElementById("blocked").style.display = "flex";  // show warning
+
+      } else {
+        /*
+          We are loaded DIRECTLY in the browser tab.
+          This is a legitimate user visiting the bank page normally.
+
+          ACTION: Show the page normally — no threat detected.
+        */
+        document.body.style.display = "block";
+      }
+
+    });
+  </script>
+
+</head>
+<body>
+
+  <!-- 
+    REAL BANK BUTTON
+    Shown only when the page is opened directly (not inside an iframe).
+    CSP + JS frame-buster together ensure this button cannot be
+    secretly clicked by an attacker through iframe overlay.
+  -->
+  <button id="btn"
+    onclick="alert('✅ Clicked directly — page is safe!')"
+    style="width:220px; height:55px; font-size:13px; font-weight:bold;
+           background:#27ae60; color:white; border:none; cursor:pointer;">
+    Transfer ₹10,000 (Protected)
+  </button>
+
+  <!-- 
+    BLOCKED WARNING
+    Shown only when the page is detected inside an iframe.
+    Replaces the real button so no sensitive action can be triggered.
+    This is the VISUAL PROOF that CSP + frame-busting is working.
+  -->
+  <div id="blocked" class="warning" style="display:none;">
+    🚫 Embedding Blocked!<br>X-Frame-Options: DENY
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!-- Implement basic security headers (X-Frame-Options, XSS-Protection, etc.) -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <title>Security Headers Demo</title>
+
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" 
+        content="default-src 'self';">
+
+  <!-- X-Frame-Options (may not work in all browsers via meta) -->
+  <meta http-equiv="X-Frame-Options" content="DENY">
+
+  <!-- X-XSS-Protection -->
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+
+  <!-- X-Content-Type-Options -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+</head>
+<body>
+
+  <h2>Basic Security Headers Example</h2>
+  <p>This page demonstrates security headers using meta tags.</p>
+
+</body>
+</html>

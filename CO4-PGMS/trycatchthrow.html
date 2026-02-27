@@ -1,0 +1,15 @@
+<!-- example pgm for try catch and throw-->
+<script>  // EX : <HTML   , <HTML> WITHOUT CLOSING TAG , IMPOROPER USAGE OF KEYWORDS LIKE funct for function
+function checkAge(age) {
+  if (age < 18) {
+    throw "You are underage!";
+  }
+  return "Access Granted!";
+}
+try {
+  let result = checkAge(25);
+  document.write(result);
+} catch (error) {
+  document.write("Error:", error);
+}
+</script>

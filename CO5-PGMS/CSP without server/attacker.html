@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clickjacking Demo - Attacker</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+    .demo-box { background: white; padding: 20px; margin: 20px 0;
+                border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    .wrapper { position: relative; width: 220px; height: 55px; margin-top: 15px; }
+    .fake    { position: absolute; width: 220px; height: 55px;
+               text-align: center; line-height: 55px; font-weight: bold;
+               z-index: 1; border-radius: 6px; cursor: pointer; }
+    iframe   { position: absolute; width: 220px; height: 55px;
+               opacity: 0.01; z-index: 2; border: none; }
+    .tag { display:inline-block; background:#e74c3c; color:white;
+           padding:3px 10px; border-radius:4px; font-size:13px; }
+    .tag-safe { background: #27ae60; }
+  </style>
+</head>
+<body>
+
+<h2>🎭 Clickjacking Attack Demo</h2>
+
+<!-- ── ATTACK 1: Unprotected Victim ── -->
+<div class="demo-box">
+  <span class="tag">❌ No Protection</span>
+  <h3>🎁 Spin to Win a Free iPhone!</h3>
+  <p>Click the button below to claim your prize:</p>
+
+  <div class="wrapper">
+    <div class="fake" style="background: orange;">🎁 Claim Free Gift</div>
+    <iframe src="victim.html"></iframe>
+  </div>
+
+  <p style="color:gray; font-size:13px;">
+    👆 You think you're clicking "Claim Free Gift"<br>
+    but actually clicking the hidden bank button underneath!
+  </p>
+</div>
+
+<!-- ── ATTACK 2: Protected Victim ── -->
+<div class="demo-box">
+  <span class="tag tag-safe">✅ With X-Frame-Options (meta CSP)</span>
+  <h3>Same Attack — Protected Page</h3>
+  <p>The iframe below tries to load the protected page:</p>
+
+  <div class="wrapper">
+    <div class="fake" style="background: #e74c3c; color:white;">🎁 Claim Free Gift</div>
+    <iframe src="victim protected.html"></iframe>
+  </div>
+
+  <p style="color:gray; font-size:13px;">
+    👆 The protected page detects it's inside an iframe<br>
+    and breaks out — click does nothing harmful!
+  </p>
+</div>
+
+<!-- ── What is Clickjacking ── -->
+<div class="demo-box">
+  <h3>📖 What is Clickjacking?</h3>
+  <p>
+    Clickjacking (UI Redress Attack) tricks users into clicking something 
+    different from what they perceive. An invisible iframe overlays a fake 
+    UI element — the user thinks they click a gift button but actually 
+    triggers a hidden action on a legitimate site.
+  </p>
+  <h3>🛡️ Security Headers That Prevent It</h3>
+  <table border="1" cellpadding="8" cellspacing="0" width="100%"
+         style="border-collapse:collapse; font-size:14px;">
+    <tr style="background:#34495e; color:white;">
+      <th>Header</th><th>Value</th><th>What it does</th>
+    </tr>
+    <tr>
+      <td><b>X-Frame-Options</b></td>
+      <td>DENY</td>
+      <td>Blocks page from loading inside any iframe</td>
+    </tr>
+    <tr style="background:#f9f9f9;">
+      <td><b>Content-Security-Policy</b></td>
+      <td>frame-ancestors 'none'</td>
+      <td>Modern replacement for X-Frame-Options</td>
+    </tr>
+    <tr>
+      <td><b>X-XSS-Protection</b></td>
+      <td>1; mode=block</td>
+      <td>Browser blocks detected XSS attacks</td>
+    </tr>
+    <tr style="background:#f9f9f9;">
+      <td><b>X-Content-Type-Options</b></td>
+      <td>nosniff</td>
+      <td>Stops browser guessing MIME types</td>
+    </tr>
+    <tr>
+      <td><b>Referrer-Policy</b></td>
+      <td>no-referrer</td>
+      <td>Hides where the request came from</td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>
